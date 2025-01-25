@@ -12,8 +12,11 @@ namespace Ecommerce.Application.Exceptions.Handlers
         {
             _logger = logger;
         }
+
+
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
         {
+
             httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
             await httpContext.Response.WriteAsJsonAsync(Fail(exception.Data, exception.Message));
             _logger.LogCritical(exception, "An unhandled exception occurred: {Message}", exception.Message);

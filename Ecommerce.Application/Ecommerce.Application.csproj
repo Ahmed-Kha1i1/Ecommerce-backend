@@ -7,11 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Features\" />
-    <Folder Include="Profiles\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="FluentValidation" Version="11.11.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
@@ -23,6 +18,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Ecommerce.Doman\Ecommerce.Doman.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\ShoppingCartItems\Queries\" />
+    <Folder Include="Features\ShoppingCarts\Commands\" />
   </ItemGroup>
 
 </Project>

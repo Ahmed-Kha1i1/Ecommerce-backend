@@ -15,6 +15,9 @@ namespace Ecommerce.Persistence.Data.Config
 
             builder.Property(b => b.LogoName)
                    .HasMaxLength(255);
+
+            builder.HasIndex(c => c.Name)
+                   .IsUnique();
         }
     }
 }

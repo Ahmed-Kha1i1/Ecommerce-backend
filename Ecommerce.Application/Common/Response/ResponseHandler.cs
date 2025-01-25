@@ -9,9 +9,9 @@ namespace Ecommerce.Application.Common.Response
         {
 
         }
-        public Response<T> BadRequest<T>(string? message = "Bad Request")
+        public Response<T> BadRequest<T>(string? message = "Bad Request", T data = default)
         {
-            return new Response<T>(HttpStatusCode.BadRequest, message);
+            return new Response<T>(HttpStatusCode.BadRequest, data, message);
         }
 
         public Response<T> ValidationError<T>(T? Error, string? message = "Validation Error")

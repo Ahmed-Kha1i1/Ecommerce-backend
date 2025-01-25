@@ -5,5 +5,7 @@ namespace Ecommerce.Application.Contracts.Persistence
 {
     public interface ICustomerRepository : IGenericRepository<Customer>
     {
+        Task<Customer?> Get(string Email, string PasswordHash);
+        Task AddCustomerToExistsUser(int UserId);
     }
 }

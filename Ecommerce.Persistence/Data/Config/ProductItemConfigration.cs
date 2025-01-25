@@ -19,6 +19,10 @@ namespace Ecommerce.Persistence.Data.Config
             builder.Property(p => p.Price)
                    .HasPrecision(10, 2);
 
+            builder.HasIndex(p => p.Price)
+                   .IsClustered(false)
+                   .IsUnique(false);
+
             builder.Property(p => p.SKU)
                    .HasMaxLength(50);
 

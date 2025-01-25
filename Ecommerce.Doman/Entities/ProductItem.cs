@@ -14,5 +14,6 @@ namespace Ecommerce.Doman.Entities
         public ICollection<Discount> Discounts { get; set; } = new List<Discount>();
         public ICollection<ProductImage> Images { get; set; } = new List<ProductImage>();
         public ICollection<ProductVariation> ProductVariations { get; set; } = new List<ProductVariation>();
+        public ICollection<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
     }
 }

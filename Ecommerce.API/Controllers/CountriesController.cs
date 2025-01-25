@@ -1,18 +1,18 @@
 ﻿using Ecommerce.API.Base;
-using Ecommerce.Application.Contracts.Persistence;
+using Ecommerce.Application.Features.Countries.Queries.GetCountries;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.API.Controllers
 {
     [Route("api/Countries")]
     [ApiController]
-    public class CountriesController(ICountryRepository countryRepository) : AppControllerBase
+    public class CountriesController : AppControllerBase
     {
         [HttpGet("All", Name = "GetAllCountries")]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await countryRepository.GetAllAsNoTracking().ToListAsync());
+            var result = await _mediator.Send(new GetCountriesQuery());
+            return CreateResult(result);
         }
     }
 }

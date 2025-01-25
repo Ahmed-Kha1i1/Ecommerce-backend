@@ -191,7 +191,7 @@ namespace Ecommerce.Persistence.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("ProductItemId")
+                    b.Property<int>("id")
                         .HasColumnType("int");
 
                     b.Property<byte>("Rate")
@@ -202,7 +202,7 @@ namespace Ecommerce.Persistence.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductItemId");
+                    b.HasIndex("id");
 
                     b.ToTable("Discounts", t =>
                         {
@@ -318,12 +318,12 @@ namespace Ecommerce.Persistence.Data.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int>("ProductItemId")
+                    b.Property<int>("id")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductItemId");
+                    b.HasIndex("id");
 
                     b.ToTable("ProductImages");
                 });
@@ -371,7 +371,7 @@ namespace Ecommerce.Persistence.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ProductItemId")
+                    b.Property<int>("id")
                         .HasColumnType("int");
 
                     b.Property<int>("VariationOptionId")
@@ -379,7 +379,7 @@ namespace Ecommerce.Persistence.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductItemId");
+                    b.HasIndex("id");
 
                     b.HasIndex("VariationOptionId");
 
@@ -505,7 +505,7 @@ namespace Ecommerce.Persistence.Data.Migrations
                 {
                     b.HasOne("Ecommerce.Doman.Entities.ProductItem", "ProductItem")
                         .WithMany("Discounts")
-                        .HasForeignKey("ProductItemId")
+                        .HasForeignKey("id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -541,7 +541,7 @@ namespace Ecommerce.Persistence.Data.Migrations
                 {
                     b.HasOne("Ecommerce.Doman.Entities.ProductItem", "ProductItem")
                         .WithMany("Images")
-                        .HasForeignKey("ProductItemId")
+                        .HasForeignKey("id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -563,7 +563,7 @@ namespace Ecommerce.Persistence.Data.Migrations
                 {
                     b.HasOne("Ecommerce.Doman.Entities.ProductItem", "ProductItem")
                         .WithMany("ProductVariations")
-                        .HasForeignKey("ProductItemId")
+                        .HasForeignKey("id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

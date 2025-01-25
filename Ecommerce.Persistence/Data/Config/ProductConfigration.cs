@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Ecommerce.Persistence.Data.Config
 {
-    internal class ProductConfigration : IEntityTypeConfiguration<Product>
+    public class ProductConfigration : IEntityTypeConfiguration<Product>
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
@@ -23,19 +23,27 @@ namespace Ecommerce.Persistence.Data.Config
                    .IsRequired()
                    .OnDelete(DeleteBehavior.Restrict);
 
+
             builder.Property(p => p.Material)
                    .IsRequired(false)
                    .HasMaxLength(100);
 
             builder.Property(p => p.Condition)
-                .IsRequired()
-                .HasColumnType("bit")
-                .HasDefaultValue(enCondition.New)
-                .HasComment("0-New,1-Used")
-                .HasConversion(
-                    g => g == enCondition.Used,
-                    g => g ? enCondition.Used : enCondition.New
-                );
+                   .IsRequired()
+                   .HasColumnType("bit")
+                   .HasDefaultValue(enCondition.New)
+                   .HasComment("0-New,1-Used")
+                   .HasConversion(
+                       g => g == enCondition.Used,
+                       g => g ? enCondition.Used : enCondition.New
+                   );
+
+            builder.Property(p => p.Stars)
+                   .HasPrecision(2, 1);
+
+            builder.HasIndex(p => p.Stars)
+                   .IsClustered(false)
+                   .IsUnique(false);
 
             builder.HasOne(p => p.Brand)
                    .WithMany(b => b.Products)

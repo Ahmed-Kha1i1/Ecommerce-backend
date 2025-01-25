@@ -1,5 +1,6 @@
 ﻿using Ecommerce.Application.Common.Validators;
 using Ecommerce.Application.Exceptions.Handlers;
+using Ecommerce.Application.Features.Orders;
 using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,7 @@ namespace Ecommerce.Application
             //Configure Mediator
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
 
+            services.Configure<OrderSettings>(configuration.GetSection("OrderSettings"));
             // Configure Fluent Validation
             ValidatorOptions.Global.DefaultRuleLevelCascadeMode = CascadeMode.Stop;
             services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies(), ServiceLifetime.Scoped);

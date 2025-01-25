@@ -7,9 +7,20 @@ namespace Ecommerce.Application.Common.Validators
 {
     public class ValidationResultFactory : ResponseHandler, IFluentValidationAutoValidationResultFactory
     {
+
         public IActionResult CreateActionResult(ActionExecutingContext context, ValidationProblemDetails? validationProblemDetails)
         {
-            var response = ValidationError(validationProblemDetails?.Errors, "One or more Valodation error occurred.");
+            var firstErrors = new Dictionary<string, string>();
+
+            foreach (var error in validationProblemDetails.Errors)
+            {
+                // Take the first error message for each key
+                if (error.Value != null && error.Value.Length > 0)
+                {
+                    firstErrors[error.Key] = error.Value.First();
+                }
+            }
+            var response = ValidationError(firstErrors, "One or more Valodation error occurred.");
             var result = new ObjectResult(response)
             {
                 StatusCode = (int)response.StatusCode

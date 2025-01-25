@@ -16,6 +16,8 @@ namespace Ecommerce.Doman.Entities
         public Brand? Brand { get; set; }
         public int? CountryOfOriginId { get; set; }
         public Country? CountryOfOrigin { get; set; }
+        public decimal? Stars { get; set; }
+        public int Reviews { get; set; }
         public ICollection<ProductItem> ProductItems { get; set; } = new List<ProductItem>();
     }
 }

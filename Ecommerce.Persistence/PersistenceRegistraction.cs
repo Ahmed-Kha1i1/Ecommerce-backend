@@ -21,16 +21,24 @@ namespace Ecommerce.Persistence
             services.AddScoped<ICountryRepository, CountryRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IDiscountRepository, DiscountRepository>();
-            services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped<IProductImageRepository, ProductImageRepository>();
             services.AddScoped<IProductItemRepository, ProductItemRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProductVariationRepository, ProductVariationRepository>();
             services.AddScoped<IVariationOptionRepository, VariationOptionRepository>();
             services.AddScoped<IVariationRepository, VariationRepository>();
+            services.AddScoped<IOrderLineRepository, OrderLineRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IOrderAddressRepository, OrderAddressRepository>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
+            services.AddScoped<IShoppingCartItemRepository, ShoppingCartItemRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddDbContext<AppDbContext>();
             return services;
         }
+
+
     }
 }

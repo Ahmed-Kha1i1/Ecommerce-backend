@@ -1,13 +1,13 @@
 ﻿
 using Ecommerce.Application.Contracts.Persistence.Base;
-using Ecommerce.Doman.Entities.Base;
 using Ecommerce.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
 namespace Ecommerce.Persistence.Repositories.Base
 {
-    public class GenericRepository<Entity> : IGenericRepository<Entity> where Entity : BaseEntity
+    public class GenericRepository<Entity> : IGenericRepository<Entity> where Entity : class
     {
         private readonly AppDbContext _dbContext;
         private DbSet<Entity> _entities { get; set; }
@@ -21,9 +21,9 @@ namespace Ecommerce.Persistence.Repositories.Base
             return await _entities.FindAsync(id);
         }
 
-        public IQueryable<Entity> GetAllAsNoTracking()
+        public async Task<List<Entity>> GetAllAsNoTracking()
         {
-            return _entities.AsNoTracking().AsQueryable();
+            return await _entities.AsNoTracking().ToListAsync();
         }
 
         public IQueryable<Entity> GetAllAsTracking()
@@ -35,13 +35,11 @@ namespace Ecommerce.Persistence.Repositories.Base
         public async Task AddRangeAsync(ICollection<Entity> entities)
         {
             await _entities.AddRangeAsync(entities);
-            await _dbContext.SaveChangesAsync();
         }
 
         public async Task AddAsync(Entity entity)
         {
             await _entities.AddAsync(entity);
-            await _dbContext.SaveChangesAsync();
         }
 
         public async Task UpdateRangeAsync<TProperty>(Func<Entity, TProperty> propertyExpression, Func<Entity, TProperty> valueExpression)
@@ -49,21 +47,20 @@ namespace Ecommerce.Persistence.Repositories.Base
             await _entities.ExecuteUpdateAsync(x => x.SetProperty(propertyExpression, valueExpression));
         }
 
-        public async Task UpdateAsync(Entity entity)
+        public async Task UpdateRangeAsync(
+            Expression<Func<Entity, bool>> predicate, Expression<Func<SetPropertyCalls<Entity>, SetPropertyCalls<Entity>>> setPropertyCalls)
         {
-            _entities.Update(entity);
-            await _dbContext.SaveChangesAsync();
+            var query = _entities.Where(predicate);
+            await query.ExecuteUpdateAsync(setPropertyCalls);
         }
-
         public async Task DeleteRangeAsync(Expression<Func<Entity, bool>> predicate)
         {
             await _entities.Where(predicate).ExecuteDeleteAsync();
         }
 
-        public async Task DeleteAsync(Entity entity)
+        public void Delete(Entity entity)
         {
             _entities.Remove(entity);
-            await _dbContext.SaveChangesAsync();
         }
 
         public async Task SaveChangesAsync()
