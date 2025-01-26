@@ -20,11 +20,7 @@ namespace Ecommerce.Application.Features.Addresses.Commands.DeleteAddress
 
         public async Task<Response<bool>> Handle(DeleteAddressCommand request, CancellationToken cancellationToken)
         {
-            int? userId = _httpContextAccessor.GetUserId();
-            if (userId is null)
-            {
-                return Unauthorized<bool>("User is not authenticated.");
-            }
+            int userId = _httpContextAccessor.GetUserId();
 
             Address? address = await _addressRepository.GetByIdAsync(request.AddressId);
 

@@ -20,18 +20,15 @@ namespace Ecommerce.Application.Features.Addresses.Commands.AddAddress
 
         public async Task<Response<int?>> Handle(AddAddressCommand request, CancellationToken cancellationToken)
         {
-            int? userId = _httpContextAccessor.GetUserId();
-            if (userId is null)
-            {
-                return Unauthorized<int?>("User is not authenticated.");
-            }
+            int userId = _httpContextAccessor.GetUserId();
 
-            bool hasDefault = await _addressRepository.HasDefaultAddress(userId.Value);
+
+            bool hasDefault = await _addressRepository.HasDefaultAddress(userId);
 
 
             var address = new Address
             {
-                CustomerId = userId.Value,
+                CustomerId = userId,
                 Address1 = request.Address1,
                 Address2 = request.Address2,
                 PostalCode = request.PostalCode,

@@ -33,13 +33,9 @@ namespace Ecommerce.Application.Features.Orders.Commands.AddOrder
 
         public async Task<Response<int?>> Handle(AddOrderCommand request, CancellationToken cancellationToken)
         {
-            int? userId = _httpContextAccessor.GetUserId();
-            if (userId is null)
-            {
-                return Unauthorized<int?>("User is not authenticated.");
-            }
+            int userId = _httpContextAccessor.GetUserId();
 
-            var defaultAddress = await _addressRepository.GetDefaultAddressByCustomerIdAsync(userId.Value);
+            var defaultAddress = await _addressRepository.GetDefaultAddressByCustomerIdAsync(userId);
             if (defaultAddress is null)
             {
                 return BadRequest<int?>("No default address found for the customer");
@@ -53,7 +49,7 @@ namespace Ecommerce.Application.Features.Orders.Commands.AddOrder
                 await _orderAddressRepository.SaveChangesAsync();
 
                 // Retrieve cart items for the user
-                var cart = await _shoppingCartRepository.GetCartItemsAsync(userId.Value);
+                var cart = await _shoppingCartRepository.GetCartItemsAsync(userId);
                 if (cart == null || cart.Items.Count == 0)
                 {
                     return BadRequest<int?>("No items in the cart.");
@@ -66,7 +62,7 @@ namespace Ecommerce.Application.Features.Orders.Commands.AddOrder
                 // Create a new order with order lines  
                 var order = new Order
                 {
-                    CustomerId = userId.Value,
+                    CustomerId = userId,
                     OrderDate = DateTime.UtcNow,
                     Status = enOrderStatus.Placed,
                     DeliveryDate = DateTime.UtcNow.AddDays(3),
@@ -101,7 +97,7 @@ namespace Ecommerce.Application.Features.Orders.Commands.AddOrder
                     await _orderRepository.SaveChangesAsync();
 
                     // Clear the cart  
-                    await _shoppingCartRepository.ClearCartAsync(userId.Value);
+                    await _shoppingCartRepository.ClearCartAsync(userId);
 
                     // Complete the transaction  
                     transaction.Complete();

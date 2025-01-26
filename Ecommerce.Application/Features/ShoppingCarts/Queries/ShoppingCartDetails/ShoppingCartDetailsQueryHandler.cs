@@ -19,12 +19,9 @@ namespace Ecommerce.Application.Features.ShoppingCarts.Queries.ShoppingCartDetai
         }
         public async Task<Response<ShoppingCartDTO?>> Handle(ShoppingCartDetailsQuery request, CancellationToken cancellationToken)
         {
-            int? userId = _httpContextAccessor.GetUserId();
-            if (userId is null)
-            {
-                return Unauthorized<ShoppingCartDTO?>("User is not authenticated.");
-            }
-            var shoppingCard = await _shoppingCartRepository.GetCartItemsAsync(userId .Value);
+            int userId = _httpContextAccessor.GetUserId();
+
+            var shoppingCard = await _shoppingCartRepository.GetCartItemsAsync(userId);
             return Success(shoppingCard);
         }
     }

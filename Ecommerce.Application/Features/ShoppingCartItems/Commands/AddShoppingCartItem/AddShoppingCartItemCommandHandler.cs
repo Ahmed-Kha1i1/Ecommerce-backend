@@ -26,11 +26,8 @@ namespace Ecommerce.Application.Features.ShoppingCartItems.Commands.AddShoppingC
 
         public async Task<Response<int?>> Handle(AddShoppingCartItemCommand request, CancellationToken cancellationToken)
         {
-            int? userId = _httpContextAccessor.GetUserId();
-            if (userId is null)
-            {
-                return Unauthorized<int?>("User is not authenticated.");
-            }
+            int userId = _httpContextAccessor.GetUserId();
+
             // Check if ProductItem exists and has sufficient stock
             var productItem = await _productItemRepository.GetByIdAsync(request.ProductItemId);
             if (productItem == null)
@@ -39,12 +36,12 @@ namespace Ecommerce.Application.Features.ShoppingCartItems.Commands.AddShoppingC
             }
 
             // Retrieve or create ShoppingCart for the customer
-            var shoppingCart = await _shoppingCartRepository.GetByCustomerIdAsync(userId.Value);
+            var shoppingCart = await _shoppingCartRepository.GetByCustomerIdAsync(userId);
             if (shoppingCart == null)
             {
                 shoppingCart = new ShoppingCart
                 {
-                    CustomerId = userId.Value
+                    CustomerId = userId
                 };
                 await _shoppingCartRepository.AddAsync(shoppingCart);
                 await _shoppingCartRepository.SaveChangesAsync();
@@ -53,7 +50,7 @@ namespace Ecommerce.Application.Features.ShoppingCartItems.Commands.AddShoppingC
 
             // Check if the item already exists in the cart
 
-            var existingItem = await _shoppingCartItemRepository.GetAsync(userId.Value, request.ProductItemId);
+            var existingItem = await _shoppingCartItemRepository.GetAsync(userId, request.ProductItemId);
             if (existingItem != null)
             {
                 if (existingItem.Quantity == productItem.StockQuantity)

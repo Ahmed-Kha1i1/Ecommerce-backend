@@ -23,11 +23,8 @@ namespace Ecommerce.Application.Features.Orders.Commands.CancelOrder
 
         public async Task<Response<bool>> Handle(CancelOrderCommand request, CancellationToken cancellationToken)
         {
-            int? userId = _httpContextAccessor.GetUserId();
-            if (userId is null)
-            {
-                return Unauthorized<bool>("User is not authenticated.");
-            }
+            int userId = _httpContextAccessor.GetUserId();
+
             var order = await _orderRepository.GetByIdAsync(request.OrderId);
             if (order == null)
             {

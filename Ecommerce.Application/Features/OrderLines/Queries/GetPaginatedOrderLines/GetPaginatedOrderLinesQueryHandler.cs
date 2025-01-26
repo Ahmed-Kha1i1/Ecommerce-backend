@@ -20,14 +20,10 @@ namespace Ecommerce.Application.Features.OrderLines.Queries.GetPaginatedOrderLin
 
         public async Task<Response<PaginatedResult<OrderLineDetailsDTO>>> Handle(GetPaginatedOrderLinesQuery request, CancellationToken cancellationToken)
         {
-            int? userId = _httpContextAccessor.GetUserId();
-            if (userId is null)
-            {
-                return Unauthorized<PaginatedResult<OrderLineDetailsDTO>>("User is not authenticated.");
-            }
+            int userId = _httpContextAccessor.GetUserId();
 
 
-            var response = await _orderLineRepository.GetPaginatedOrderLines(userId.Value, request.PageNumber, request.PageSize, request.IsCanceled);
+            var response = await _orderLineRepository.GetPaginatedOrderLines(userId, request.PageNumber, request.PageSize, request.IsCanceled);
             if (response == null)
             {
                 return NotFound<PaginatedResult<OrderLineDetailsDTO>>("No order lines found for the specified criteria.");

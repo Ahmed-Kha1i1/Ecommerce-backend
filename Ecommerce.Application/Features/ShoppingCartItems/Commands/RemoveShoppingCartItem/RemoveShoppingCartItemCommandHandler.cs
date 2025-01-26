@@ -18,13 +18,10 @@ namespace Ecommerce.Application.Features.ShoppingCartItems.Commands.RemoveShoppi
 
         public async Task<Response<bool>> Handle(RemoveShoppingCartItemCommand request, CancellationToken cancellationToken)
         {
-            int? userId = _httpContextAccessor.GetUserId();
-            if (userId is null)
-            {
-                return Unauthorized<bool>("User is not authenticated.");
-            }
+            int userId = _httpContextAccessor.GetUserId();
+
             // Retrieve the ShoppingCartItem
-            var shoppingCartItem = await _shoppingCartItemRepository.GetAsync(userId.Value, request.ProductItemId);
+            var shoppingCartItem = await _shoppingCartItemRepository.GetAsync(userId, request.ProductItemId);
             if (shoppingCartItem == null)
             {
                 return NotFound<bool>($"ShoppingCartItem not found.");

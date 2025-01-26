@@ -24,13 +24,10 @@ namespace Ecommerce.Application.Features.Addresses.Queries.GetDefaultAddress
         }
         public async Task<Response<AddressSummaryDTO>> Handle(GetDefaultAddressQuery request, CancellationToken cancellationToken)
         {
-            int? userId = _httpContextAccessor.GetUserId();
-            if (userId is null)
-            {
-                return Unauthorized<AddressSummaryDTO>("User is not authenticated.");
-            }
+            int userId = _httpContextAccessor.GetUserId();
 
-            Address? address = await _addressRepository.GetDefaultAddressByCustomerIdAsync(userId.Value);
+
+            Address? address = await _addressRepository.GetDefaultAddressByCustomerIdAsync(userId);
 
             if (address == null || address.CustomerId != userId)
             {

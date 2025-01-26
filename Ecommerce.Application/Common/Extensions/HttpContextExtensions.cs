@@ -5,14 +5,10 @@ namespace Ecommerce.Application.Common.Extensions
 {
     public static class HttpContextExtensions
     {
-        public static int? GetUserId(this IHttpContextAccessor httpContextAccessor)
+        public static int GetUserId(this IHttpContextAccessor httpContextAccessor)
         {
-            string? userId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (int.TryParse(userId, out int id))
-            {
-                return id;
-            }
-            return null;
+            string userId = httpContextAccessor.HttpContext!.User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            return int.Parse(userId);
         }
 
         public static string? GetUserIpAddress(this IHttpContextAccessor httpContextAccessor)

@@ -18,12 +18,9 @@ namespace Ecommerce.Application.Features.ShoppingCartItems.Commands.UpdateShoppi
 
         public async Task<Response<bool>> Handle(UpdateShoppingCartItemQuantityCommand request, CancellationToken cancellationToken)
         {
-            int? userId = _httpContextAccessor.GetUserId();
-            if (userId is null)
-            {
-                return Unauthorized<bool>("User is not authenticated.");
-            }
-            var shoppingCartItem = await _shoppingCartItemRepository.GetWithProductItemAsync(userId.Value, request.ProductItemId);
+            int userId = _httpContextAccessor.GetUserId();
+
+            var shoppingCartItem = await _shoppingCartItemRepository.GetWithProductItemAsync(userId, request.ProductItemId);
             if (shoppingCartItem == null)
             {
                 return NotFound<bool>($"ShoppingCartItem not found.");

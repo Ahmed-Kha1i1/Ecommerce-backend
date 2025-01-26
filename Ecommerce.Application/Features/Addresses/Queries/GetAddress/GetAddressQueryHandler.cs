@@ -23,11 +23,7 @@ namespace Ecommerce.Application.Features.Addresses.Queries.GetAddress
 
         public async Task<Response<AddressSummaryDTO>> Handle(GetAddressQuery request, CancellationToken cancellationToken)
         {
-            int? userId = _httpContextAccessor.GetUserId();
-            if (userId is null)
-            {
-                return Unauthorized<AddressSummaryDTO>("User is not authenticated.");
-            }
+            int userId = _httpContextAccessor.GetUserId();
 
             Address? address = await _addressRepository.GetByIdIncludeCountryAsync(request.AddressId);
 

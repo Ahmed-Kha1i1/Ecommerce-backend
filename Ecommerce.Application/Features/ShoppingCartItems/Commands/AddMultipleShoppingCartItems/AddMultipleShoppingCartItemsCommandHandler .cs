@@ -26,18 +26,15 @@ namespace Ecommerce.Application.Features.ShoppingCartItems.Commands.AddMultipleS
 
         public async Task<Response<bool>> Handle(AddMultipleShoppingCartItemsCommand request, CancellationToken cancellationToken)
         {
-            int? userId = _httpContextAccessor.GetUserId();
-            if (userId is null)
-            {
-                return Unauthorized<bool>("User is not authenticated.");
-            }
+            int userId = _httpContextAccessor.GetUserId();
 
-            var shoppingCart = await _shoppingCartRepository.GetIncludingItems(userId.Value);
+
+            var shoppingCart = await _shoppingCartRepository.GetIncludingItems(userId);
             if (shoppingCart == null)
             {
                 shoppingCart = new ShoppingCart
                 {
-                    CustomerId = userId.Value
+                    CustomerId = userId
                 };
                 await _shoppingCartRepository.AddAsync(shoppingCart);
                 await _shoppingCartRepository.SaveChangesAsync();

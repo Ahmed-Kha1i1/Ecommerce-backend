@@ -19,11 +19,7 @@ namespace Ecommerce.Application.Features.Addresses.Commands.UpdateAddress
 
         public async Task<Response<bool>> Handle(UpdateAddressCommand request, CancellationToken cancellationToken)
         {
-            int? userId = _httpContextAccessor.GetUserId();
-            if (userId is null)
-            {
-                return Unauthorized<bool>("User is not authenticated.");
-            }
+            int userId = _httpContextAccessor.GetUserId();
 
             var address = await _addressRepository.GetByIdAsync(request.AddressId);
             if (address == null || address.CustomerId != userId)

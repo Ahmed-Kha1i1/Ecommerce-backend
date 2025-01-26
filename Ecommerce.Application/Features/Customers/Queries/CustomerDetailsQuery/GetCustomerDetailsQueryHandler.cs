@@ -25,19 +25,16 @@ namespace Ecommerce.Application.Features.Customers.Queries.CustomerDetailsQuery
         }
         public async Task<Response<GetCustomerDetailsQueryResponse>> Handle(GetCustomerDetailsQuery request, CancellationToken cancellationToken)
         {
-            int? userId = _httpContextAccessor.GetUserId();
-            if (userId is null)
-            {
-                return Unauthorized<GetCustomerDetailsQueryResponse>("User is not authenticated.");
-            }
-            Customer? customer = await _customerRepository.GetByIdAsync(userId.Value);
+            int userId = _httpContextAccessor.GetUserId();
+
+            Customer? customer = await _customerRepository.GetByIdAsync(userId);
 
             if (customer == null)
             {
                 return BadRequest<GetCustomerDetailsQueryResponse>("Customer not found.");
             }
             var response = _mapper.Map<GetCustomerDetailsQueryResponse>(customer);
-            response.HasDefaultAddress = await _addressRepository.HasDefaultAddress(userId.Value);
+            response.HasDefaultAddress = await _addressRepository.HasDefaultAddress(userId);
             return Success(response);
         }
     }

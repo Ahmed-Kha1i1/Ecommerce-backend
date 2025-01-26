@@ -22,11 +22,8 @@ namespace Ecommerce.Application.Features.OrderLines.Commands.RemoveOrderLine
 
         public async Task<Response<bool>> Handle(RemoveOrderLineCommand request, CancellationToken cancellationToken)
         {
-            int? userId = _httpContextAccessor.GetUserId();
-            if (userId is null)
-            {
-                return Unauthorized<bool>("User is not authenticated.");
-            }
+            int userId = _httpContextAccessor.GetUserId();
+
 
             var orderLine = await _orderLineRepository.GetByIdIncludeItemAsync(request.OrderLineId);
             if (orderLine == null)

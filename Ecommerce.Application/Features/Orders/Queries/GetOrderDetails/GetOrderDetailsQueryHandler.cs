@@ -24,11 +24,7 @@ namespace Ecommerce.Application.Features.Orders.Queries.GetOrderDetails
 
         public async Task<Response<GetOrderDetailsQueryResponse>> Handle(GetOrderDetailsQuery request, CancellationToken cancellationToken)
         {
-            int? userId = _httpContextAccessor.GetUserId();
-            if (userId is null)
-            {
-                return Unauthorized<GetOrderDetailsQueryResponse>("User is not authenticated.");
-            }
+            int userId = _httpContextAccessor.GetUserId();
 
             var order = await _orderRepository.GetOrderIncludeAddress(request.OrderId);
             if (order == null || order.CustomerId != userId)

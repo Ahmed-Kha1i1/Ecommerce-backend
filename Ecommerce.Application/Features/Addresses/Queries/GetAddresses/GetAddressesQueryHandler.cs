@@ -22,13 +22,9 @@ namespace Ecommerce.Application.Features.Addresses.Queries.GetAddresses
 
         public async Task<Response<List<AddressSummaryDTO>>> Handle(GetAddressesQuery request, CancellationToken cancellationToken)
         {
-            int? userId = _httpContextAccessor.GetUserId();
-            if (userId is null)
-            {
-                return Unauthorized<List<AddressSummaryDTO>>("User is not authenticated.");
-            }
+            int userId = _httpContextAccessor.GetUserId();
 
-            var addresses = await _addressRepository.GetAddressesByCustomerIdAsync(userId.Value);
+            var addresses = await _addressRepository.GetAddressesByCustomerIdAsync(userId);
 
             if (addresses == null || addresses.Count == 0)
             {

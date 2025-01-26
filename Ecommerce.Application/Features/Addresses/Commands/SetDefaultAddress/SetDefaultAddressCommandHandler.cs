@@ -20,11 +20,7 @@ namespace Ecommerce.Application.Features.Addresses.Commands.SetDefaultAddress
 
         public async Task<Response<bool>> Handle(SetDefaultAddressCommand request, CancellationToken cancellationToken)
         {
-            int? userId = _httpContextAccessor.GetUserId();
-            if (userId is null)
-            {
-                return Unauthorized<bool>("User is not authenticated.");
-            }
+            int userId = _httpContextAccessor.GetUserId();
 
             // Find the address to set as default  
             Address? newDefaultAddress = await _addressRepository.GetByIdAsync(request.AddressId);
@@ -38,7 +34,7 @@ namespace Ecommerce.Application.Features.Addresses.Commands.SetDefaultAddress
                 return Success<bool>(true, "Address is already default.");
             }
             // Find the existing default address  
-            Address? oldDefaultAddress = await _addressRepository.GetDefaultAddressByCustomerIdAsync(userId.Value);
+            Address? oldDefaultAddress = await _addressRepository.GetDefaultAddressByCustomerIdAsync(userId);
 
 
             if (oldDefaultAddress != null)
