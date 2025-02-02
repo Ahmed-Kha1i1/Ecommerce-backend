@@ -22,7 +22,6 @@ namespace Ecommerce.Application.Features.Customers.Commands.EditCustomer
         public async Task<Response<bool>> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
         {
             var userId = _httpContextAccessor.GetUserId();
-
             var customer = await _customerRepository.GetByIdAsync(userId);
 
             if (customer == null)

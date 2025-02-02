@@ -44,8 +44,7 @@ namespace Ecommerce.Persistence.Contexts
         {
             base.OnConfiguring(optionsBuilder);
             optionsBuilder
-                .UseSqlServer(configuration.GetSection("ConnectionStrings:defaultConnection").Value!,
-                sqlOptions => sqlOptions.CommandTimeout(1000))
+                .UseSqlServer(configuration.GetSection("ConnectionStrings:RemoteConnection").Value!)
                 .AddInterceptors(new SoftDeleteInterceptor())
                 .LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information);
 

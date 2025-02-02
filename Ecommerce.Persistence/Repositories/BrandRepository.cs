@@ -34,7 +34,7 @@ namespace Ecommerce.Persistence.Repositories
 
             using (var command = _context.Database.GetDbConnection().CreateCommand())
             {
-                command.CommandText = "[dbo].[SP_ProductsSearchBrands]";
+                command.CommandText = "[dbo].[SP_FilteringProductsBrands]";
                 command.CommandType = CommandType.StoredProcedure;
                 foreach (var param in queryParameters)
                 {

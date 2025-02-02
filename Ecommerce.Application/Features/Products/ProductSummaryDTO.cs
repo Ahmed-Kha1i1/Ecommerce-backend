@@ -10,7 +10,6 @@
         public int ProductItemId { get; set; }
         public int StockQuantity { get; set; }
         public decimal Price { get; set; }
-        public decimal? PriceAfterDiscount { get; set; }
         public byte? Rate { get; set; }
     }
 }

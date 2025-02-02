@@ -35,6 +35,12 @@ namespace Ecommerce.Application.Features.Orders.Commands.AddOrder
         {
             int userId = _httpContextAccessor.GetUserId();
 
+            var cart = await _shoppingCartRepository.GetCartItemsAsync(userId);
+            if (cart == null || cart.Items.Count == 0)
+            {
+                return BadRequest<int?>("No items in the cart.");
+            }
+
             var defaultAddress = await _addressRepository.GetDefaultAddressByCustomerIdAsync(userId);
             if (defaultAddress is null)
             {
@@ -43,18 +49,12 @@ namespace Ecommerce.Application.Features.Orders.Commands.AddOrder
 
             // Use a transaction scope to ensure atomicity  
             using (var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-            {
+            { 
+
                 var orderAddress = _mapper.Map<OrderAddress>(defaultAddress);
                 await _orderAddressRepository.AddAsync(orderAddress);
                 await _orderAddressRepository.SaveChangesAsync();
-
-                // Retrieve cart items for the user
-                var cart = await _shoppingCartRepository.GetCartItemsAsync(userId);
-                if (cart == null || cart.Items.Count == 0)
-                {
-                    return BadRequest<int?>("No items in the cart.");
-                }
-
+                
                 // Initialize total price  
                 decimal totalPrice = 0;
 

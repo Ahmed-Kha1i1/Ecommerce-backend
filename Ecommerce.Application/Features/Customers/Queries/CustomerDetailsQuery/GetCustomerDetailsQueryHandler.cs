@@ -31,7 +31,7 @@ namespace Ecommerce.Application.Features.Customers.Queries.CustomerDetailsQuery
 
             if (customer == null)
             {
-                return BadRequest<GetCustomerDetailsQueryResponse>("Customer not found.");
+                return NotFound<GetCustomerDetailsQueryResponse>("Customer not found.");
             }
             var response = _mapper.Map<GetCustomerDetailsQueryResponse>(customer);
             response.HasDefaultAddress = await _addressRepository.HasDefaultAddress(userId);

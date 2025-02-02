@@ -1,0 +1,45 @@
+{
+  "ConnectionStrings": {
+    "defaultConnection": "Your_defaultConnection",
+    "RemoteConnection": "Your_RemoteConnection"
+  },
+  "Authorization": {
+    "Google": {
+      "ClientId": "Your_ClientId",
+      "ClientSecret": "Your_ClientSecret",
+      "RedirectUri": "https://ecommercecorner.netlify.app/"
+    }
+  },
+  "SmtpSettings": {
+    "Host": "smtp.gmail.com",
+    "Port": 587,
+    "Username": "Username",
+    "Password": "Password",
+    "FromEmail": "FromEmail",
+    "FromName": "FromName"
+  },
+  "OtpSettings": {
+    "OtpExpirationMinutes": 10,
+    "VerificationExpirationHours": 24,
+    "OtpPrefix": "Otp:",
+    "VerifiedPrefix": "Verified:",
+    "AllowSendOTPMinutes": 1
+  },
+  "RefreshTokenLifetime": 7,
+  "JWT": {
+    "Issuer": "https://ecommercestoreapi.runasp.net",
+    "Audiences": [
+      "https://ecommercecorner.netlify.app"
+    ],
+    "Lifetime": 20,
+    "SigningKey": "SigningKey"
+  },
+  "OrderSettings": {
+    "DoorPaymentFees": 15,
+    "DeliveryFees": 35
+  },
+  "AllowedOrigins": [
+    "https://ecommercecorner.netlify.app",
+    "https://localhost:5173"
+  ]
+}

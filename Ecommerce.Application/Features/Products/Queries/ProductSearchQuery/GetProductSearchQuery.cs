@@ -12,8 +12,8 @@ namespace Ecommerce.Application.Features.Products.Queries.ProductSearchQuery
         public int? CategoryId { get; set; }
         public enCondition? Condition { get; set; }
         public decimal? Stars { get; set; }
-        public decimal? MaxPrice { get; set; }
         public decimal? MinPrice { get; set; }
+        public decimal? MaxPrice { get; set; }
         public string OrderBy { get; set; } = "Stars";
         public string OrderDirection { get; set; } = "Desc";
     }

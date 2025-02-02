@@ -122,6 +122,10 @@ namespace Ecommerce.Infrastructure.OTP
 
         private string GenerateVerifiedKey(string email) => $"{_otpSettings.VerifiedPrefix}{email}";
 
-
+        public Task RemoveVerificationAsync(string email, string? ipAddress)
+        {
+            _memoryCache.Remove(GenerateVerifiedKey(email));
+            return Task.CompletedTask;
+        }
     }
 }

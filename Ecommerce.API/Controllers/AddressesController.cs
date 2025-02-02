@@ -19,6 +19,8 @@ namespace Ecommerce.API.Controllers
     {
         [HttpGet("")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetAddresses()
         {
             var result = await _mediator.Send(new GetAddressesQuery());
@@ -27,7 +29,8 @@ namespace Ecommerce.API.Controllers
 
         [HttpGet("DefaultAddress")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetDefaultAddress()
         {
             var result = await _mediator.Send(new GetDefaultAddressQuery());
@@ -36,7 +39,8 @@ namespace Ecommerce.API.Controllers
 
         [HttpGet("{Id}")]// addressId
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetAddress([FromRoute] IdRequest request)
         {
             var result = await _mediator.Send(new GetAddressQuery(request.Id));
@@ -45,6 +49,8 @@ namespace Ecommerce.API.Controllers
 
         [HttpDelete("{Id}")]// addressId
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteAddress([FromRoute] IdRequest request)
         {
@@ -53,7 +59,8 @@ namespace Ecommerce.API.Controllers
         }
 
         [HttpPost("Add")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddAddress([FromBody] AddAddressCommand command)
         {
@@ -63,6 +70,8 @@ namespace Ecommerce.API.Controllers
 
         [HttpPut("Update")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateAddress([FromBody] UpdateAddressCommand command)
         {
@@ -72,6 +81,8 @@ namespace Ecommerce.API.Controllers
 
         [HttpPut("SetDefault")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SetDefaultAddress([FromBody] SetDefaultAddressCommand command)
         {

@@ -8,5 +8,6 @@ namespace Ecommerce.Application.Contracts.Persistence
         Task<Order?> FindOpenedOrderAsync(int customerId);
         Task<Order?> GetOrderIncludeAddress(int OrderId);
         Task<bool> UpdateOrderPriceAsync(int orderId);
+        Task<bool> CanBeCancelled(Order order);
     }
 }

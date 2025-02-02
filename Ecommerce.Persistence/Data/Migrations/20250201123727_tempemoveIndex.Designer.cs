@@ -4,6 +4,7 @@ using Ecommerce.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecommerce.Persistence.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250201123727_tempemoveIndex")]
+    partial class tempemoveIndex
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -378,6 +381,7 @@ namespace Ecommerce.Persistence.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -602,10 +606,6 @@ namespace Ecommerce.Persistence.Data.Migrations
                     b.HasIndex("CountryOfOriginId");
 
                     b.HasIndex("MinPrice");
-
-                    b.HasIndex("MinProductItemId")
-                        .IsUnique()
-                        .HasFilter("[MinProductItemId] IS NOT NULL");
 
                     b.HasIndex("Stars");
 
@@ -1188,18 +1188,11 @@ namespace Ecommerce.Persistence.Data.Migrations
                         .HasForeignKey("CountryOfOriginId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Ecommerce.Doman.Entities.ProductItem", "MinProductItem")
-                        .WithOne()
-                        .HasForeignKey("Ecommerce.Doman.Entities.Product", "MinProductItemId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.Navigation("Brand");
 
                     b.Navigation("Category");
 
                     b.Navigation("CountryOfOrigin");
-
-                    b.Navigation("MinProductItem");
                 });
 
             modelBuilder.Entity("Ecommerce.Doman.Entities.ProductImage", b =>

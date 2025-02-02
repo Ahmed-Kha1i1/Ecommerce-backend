@@ -14,6 +14,12 @@ namespace Ecommerce.Persistence.Repositories
             _context = context;
         }
 
+        public Task<bool> CanBeCancelled(Order order)
+        {
+            var cancellableStatuses = new List<enOrderStatus>() { enOrderStatus.Placed, enOrderStatus.Confirmed, enOrderStatus.Processing };
+            return Task.FromResult(cancellableStatuses.Contains(order.Status));
+        }
+
         public async Task<Order?> FindOpenedOrderAsync(int customerId)
         {
             //this function has logical error in enOrderStatus.Placed

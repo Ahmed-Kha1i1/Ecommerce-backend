@@ -485,3 +485,6 @@ $RECYCLE.BIN/
 
 #ignore logs
 /logs/
+
+# Ignore secrets file  
+/configsettings.json

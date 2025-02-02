@@ -35,10 +35,8 @@ namespace Ecommerce.Persistence
             services.AddScoped<IShoppingCartItemRepository, ShoppingCartItemRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
-            services.AddDbContext<AppDbContext>();
+            services.AddDbContext<AppDbContext>().AddDbContextFactory<AppDbContext>(lifetime: ServiceLifetime.Scoped);
             return services;
         }
-
-
     }
 }

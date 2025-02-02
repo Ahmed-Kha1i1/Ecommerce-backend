@@ -11,9 +11,12 @@ namespace Ecommerce.API.Controllers
     [Route("api/Orders")]
     [ApiController]
     [Authorize]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public class OrderController : AppControllerBase
     {
         [HttpGet("{Id}")] //OrderId
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetOrder([FromRoute] IdRequest request)
         {
             var result = await _mediator.Send(new GetOrderDetailsQuery(request.Id));
@@ -21,6 +24,8 @@ namespace Ecommerce.API.Controllers
         }
 
         [HttpPost("Add")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddOrder([FromBody] AddOrderCommand command)
         {
             var result = await _mediator.Send(command);
@@ -28,6 +33,9 @@ namespace Ecommerce.API.Controllers
         }
 
         [HttpDelete("Cancel/{Id}")] //orderId
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> CancelOrder([FromRoute] IdRequest request)
         {
             var command = new CancelOrderCommand(request.Id);

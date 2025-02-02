@@ -8,7 +8,9 @@ namespace Ecommerce.API.Controllers
     [ApiController]
     public class CountriesController : AppControllerBase
     {
-        [HttpGet("All", Name = "GetAllCountries")]
+        [HttpGet("All")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetAll()
         {
             var result = await _mediator.Send(new GetCountriesQuery());

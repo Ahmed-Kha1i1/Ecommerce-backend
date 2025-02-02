@@ -9,7 +9,9 @@ namespace Ecommerce.Application.Profiles
     {
         public CustomerProfile()
         {
-            CreateMap<Customer, GetCustomerDetailsQueryResponse>();
+            CreateMap<Customer, GetCustomerDetailsQueryResponse>()
+                .ForMember(dest => dest.HasPassword, opt => opt.MapFrom(src => src.PasswordHash != null));
+
             CreateMap<UpdateCustomerCommand, Customer>()
                 .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.FirstName))
                 .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.LastName))

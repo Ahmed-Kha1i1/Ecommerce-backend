@@ -22,7 +22,6 @@ namespace Ecommerce.Application.Features.OrderLines.Queries.GetPaginatedOrderLin
         {
             int userId = _httpContextAccessor.GetUserId();
 
-
             var response = await _orderLineRepository.GetPaginatedOrderLines(userId, request.PageNumber, request.PageSize, request.IsCanceled);
             if (response == null)
             {

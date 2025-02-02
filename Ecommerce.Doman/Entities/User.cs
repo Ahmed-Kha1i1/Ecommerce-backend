@@ -8,7 +8,7 @@ namespace Ecommerce.Doman.Entities
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public enGender Gender { get; set; } = enGender.Male;
+        public enGender? Gender { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
         public bool IsDeleted { get; set; }
         public DateTime? DateDeleted { get; set; }

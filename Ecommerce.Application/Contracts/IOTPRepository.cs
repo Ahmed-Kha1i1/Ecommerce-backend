@@ -6,5 +6,6 @@
         bool VerifyOtp(string email, string otp, string? ipAddress);
         bool IsVerified(string email, string? ipAddress);
         bool HasOtp(string email, out int? remainingSeconds);
+        Task RemoveVerificationAsync(string email, string? ipAddress);
     }
 }

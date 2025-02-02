@@ -52,6 +52,8 @@ namespace Ecommerce.Application.Features.Customers.Commands.AddCustomer
             {
                 return BadRequest<int?>("An error occurred while creating the customer. Please try again.");
             }
+            
+            await _OTPRepository.RemoveVerificationAsync(request.Email, ipAddress);
 
             var customer = new Customer
             {

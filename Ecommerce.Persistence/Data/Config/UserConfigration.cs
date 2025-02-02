@@ -16,14 +16,13 @@ namespace Ecommerce.Persistence.Data.Config
                     .HasMaxLength(50);
 
             builder.Property(p => p.Gender)
-                    .IsRequired()
                     .HasColumnType("bit")
-                    .HasDefaultValue(enGender.Male)
                     .HasComment("0-Male,1-Female")
                     .HasConversion(
-                        g => g == enGender.Female,
-                        g => g ? enGender.Female : enGender.Male
+                        g => g == null ? (bool?)null : g == enGender.Female, // Convert enum to nullable bool
+                        g => g == null ? null : g.Value ? enGender.Female : enGender.Male // Convert nullable bool to enum
                     );
+
 
 
             builder.Property(p => p.CreatedDate)

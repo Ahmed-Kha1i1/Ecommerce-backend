@@ -4,6 +4,7 @@ using Ecommerce.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecommerce.Persistence.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250127073852_UpdateHandlingPrice")]
+    partial class UpdateHandlingPrice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -137,6 +140,9 @@ namespace Ecommerce.Persistence.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("PriceAfterDiscount")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("ProductItemId")
@@ -378,6 +384,7 @@ namespace Ecommerce.Persistence.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -816,8 +823,10 @@ namespace Ecommerce.Persistence.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<bool?>("Gender")
+                    b.Property<bool>("Gender")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
+                        .HasDefaultValue(false)
                         .HasComment("0-Male,1-Female");
 
                     b.Property<bool>("IsDeleted")

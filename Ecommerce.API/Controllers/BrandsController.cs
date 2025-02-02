@@ -8,8 +8,9 @@ namespace Ecommerce.API.Controllers
     [ApiController]
     public class BrandsController : AppControllerBase
     {
-        [HttpGet("", Name = "BrandsSearch")]
+        [HttpGet("")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> BrandsSearch([FromQuery] GetBrandsSearchQuery query)
         {
             var result = await _mediator.Send(query);

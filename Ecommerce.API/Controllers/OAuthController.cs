@@ -1,6 +1,5 @@
 ﻿using Ecommerce.API.Base;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Facebook;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,15 +9,10 @@ namespace Ecommerce.API.Controllers
     [ApiController]
     public class OAuthController : AppControllerBase
     {
-        [HttpGet("signin-facebook")]
-        public IActionResult GitHubLogin()
-        {
-            var authenticationProperties = new AuthenticationProperties();
-
-            return Challenge(authenticationProperties, FacebookDefaults.AuthenticationScheme);
-        }
 
         [HttpGet("signin-google")]
+        [ProducesResponseType(StatusCodes.Status302Found)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult GoogleLogin()
         {
             var authenticationProperties = new AuthenticationProperties();

@@ -56,6 +56,17 @@ namespace Ecommerce.Persistence.Data.Config
                    .HasForeignKey(p => p.CountryOfOriginId)
                    .IsRequired(false)
                    .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(p => p.MinProductItem)
+                   .WithOne()
+                   .HasForeignKey<Product>(p => p.MinProductItemId)
+                   .IsRequired(false)
+                   .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Property(p => p.MinPrice)
+                   .HasPrecision(10, 2);
+
+            builder.HasIndex(p => p.MinPrice);
         }
     }
 }

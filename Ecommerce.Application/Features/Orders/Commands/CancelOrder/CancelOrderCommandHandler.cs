@@ -23,26 +23,26 @@ namespace Ecommerce.Application.Features.Orders.Commands.CancelOrder
 
         public async Task<Response<bool>> Handle(CancelOrderCommand request, CancellationToken cancellationToken)
         {
+
             int userId = _httpContextAccessor.GetUserId();
 
             var order = await _orderRepository.GetByIdAsync(request.OrderId);
-            if (order == null)
+            if (order == null || order.CustomerId != userId)
             {
                 return NotFound<bool>("Order not found.");
-            }
-
-            var cancellableStatuses = new List<enOrderStatus>() { enOrderStatus.Placed, enOrderStatus.Confirmed, enOrderStatus.Processing };
+            }         
 
             // Check if the current order status allows cancellation
-            if (!cancellableStatuses.Contains(order.Status))
+            if (!await _orderRepository.CanBeCancelled(order))
             {
-                return BadRequest<bool>("Order cannot be canceled at its current status.");
+                return BadRequest<bool>("Order cannot be canceled at its current status");
             }
 
             using (var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
                 order.Status = enOrderStatus.Canceled;
                 order.TotalPrice = await _orderLineRepository.GetOrderPriceAsync(request.OrderId);
+                
                 await _orderRepository.SaveChangesAsync();
                 await _orderLineRepository.DeleteRangePerOrderAsync(request.OrderId);
                 transaction.Complete();

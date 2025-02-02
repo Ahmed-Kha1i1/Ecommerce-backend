@@ -29,7 +29,7 @@ namespace Ecommerce.Application.Features.Orders.Queries.GetOrderDetails
             var order = await _orderRepository.GetOrderIncludeAddress(request.OrderId);
             if (order == null || order.CustomerId != userId)
             {
-                return BadRequest<GetOrderDetailsQueryResponse>("Order not found or does not belong to the user.");
+                return NotFound<GetOrderDetailsQueryResponse>("Order not found or does not belong to the user");
             }
 
             var orderResponse = _mapper.Map<GetOrderDetailsQueryResponse>(order);

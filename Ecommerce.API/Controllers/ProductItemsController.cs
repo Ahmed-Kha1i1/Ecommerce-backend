@@ -10,6 +10,9 @@ namespace Ecommerce.API.Controllers
     {
 
         [HttpPost("GetDetails")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetProductItemsDetails(GetProductItemsDetailsQuery query)
         {
             var result = await _mediator.Send(query);

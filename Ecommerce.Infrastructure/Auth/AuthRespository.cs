@@ -28,7 +28,7 @@ namespace Ecommerce.Persistence.Repositories
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Issuer = _jwtOptions.Issuer,
-                Audience = _jwtOptions.Audience,
+                Audience = _jwtOptions.Audiences.FirstOrDefault(),
                 IssuedAt = DateTime.UtcNow,
                 Expires = DateTime.UtcNow.AddMinutes(_jwtOptions.Lifetime),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.SigningKey)), SecurityAlgorithms.HmacSha256),
