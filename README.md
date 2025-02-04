@@ -11,3 +11,34 @@ A modern e-commerce platform designed to provide a seamless online shopping expe
   - ✅**Logging:** Serilog
   - ✅**Authentication:** ASP.NET Core Identity, External Login Providers (e.g., Google)
   - ✅**Authorization:** Role Based Authorization
+
+## Features
+1. ### User Authentication
+  - Supports sign-in and sign-up functionality for users.
+  - Allows registration via email/password or Google authentication.
+
+2. ### Account Management
+  + Enables users to:
+    - Reset password using forgot password functionality.
+    - Change password securely.
+    - Update or delete account information.
+    - Manage saved addresses (add, edit, or delete).
+
+3. ### Recently Viewed Products
+  - Tracks and displays recently viewed products.
+
+4. ### Cart Management
+  - Handles guest and user carts seamlessly.
+  - Automatically merges guest cart items with the user’s cart upon login.
+
+5. ### Product Filtering and Search
+  - Allows users to filter products by category, price range, ratings, and other attributes.
+  - Provides a detailed product page.
+
+7. ### Order Management
+  + Enables users to:
+    - Place orders and view order history.
+    - Track order status in real-time.
+
+## Usage
+[Link to Website](https://ecommercecorner.netlify.app)
