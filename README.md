@@ -9,13 +9,13 @@ A modern e-commerce platform designed to provide a seamless online shopping expe
   - ✅**database:** SQL Server 
   - ✅**Data Acces:** Entity Framework
   - ✅**Logging:** Serilog
-  - ✅**Authentication:** ASP.NET Core Identity, External Login Providers (e.g., Google)
+  - ✅**Authentication:** ASP.NET Core Identity, External Identity Providers (e.g., Google)
   - ✅**Authorization:** Role Based Authorization
 
 ## Features
 1. ### User Authentication
-  - Supports sign-in and sign-up functionality for users.
-  - Allows registration via email/password or Google authentication.
+  - Supports sign-in and sign-up functionality for users, with email confirmation required for registration.
+  - Allows users log in or sign up using external identity providers (e.g., Google).
 
 2. ### Account Management
   + Enables users to:
