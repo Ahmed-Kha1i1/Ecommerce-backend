@@ -39,6 +39,7 @@ A modern e-commerce platform designed to provide a seamless online shopping expe
   + Enables users to:
     - Place orders and view order history.
     - Track order status in real-time.
+    - Cancel order or order line.
 
 ## Usage
 [Link to Website](https://ecommercecorner.netlify.app)
